@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<object th:include="fragments/fragment :: header" th:remove="tag"></object>
+	</head>
+	
+	<body>
+		<nav th:replace="fragments/fragment :: navbar"></nav>
+		<div class="row">
+			<div class="col-md-6">
+				<div class="card">
+					<div class="card-header">
+						<h2 th:text="'Lihat Data Pegawai - ' +${pegawai.nip} "></h2>
+					</div>	
+					<div class= "card-body">
+						<p th:text="'NIP: '+${pegawai.nip}"></p>	
+						<p th:text="'Nama: '+${pegawai.nama}"></p>
+						<p th:text="'Tempat Lahir: '+${pegawai.tempat_lahir}"></p>
+						<p th:text="'Tanggal Lahir: '+${pegawai.tanggal_lahir}"></p>		
+						<p th:text="'Tahun Masuk: '+${pegawai.tahun_masuk}"></p>
+						<p th:text="'Nama Instansi: '+${pegawai.instansi.nama} + '-' +${pegawai.instansi.provinsi.nama}"></p>
+						<p th:text="'Jabatan: '"></p>
+						<div th:each="jabatan,iterationStatus: *{pegawai.jabatan}">
+							<p th:text="${jabatan.nama}"></p>
+						</div>
+						
+						<p th:text="'Gaji: ' + ${#numbers.formatDecimal(gaji,0,0)}"></p>
+									
+					</div>
+					
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

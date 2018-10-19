@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<object th:include="fragments/fragment :: header" th:remove="tag"></object>
+	</head>
+	
+	<body>
+		<nav th:replace="fragments/fragment :: navbar"></nav>
+		<div class="row">
+			<div class="col-md-6">
+				<div class="card">
+					<div class="card-header">
+						<h1 th:text="'Detail Jabatan - ' +${jabatan.nama} "></h1>
+					</div>	
+					<div class= "card-body">
+						<h3 th:text="'Deskripsi: '+${jabatan.deskripsi}"></h3>	
+						<h3 th:text="'Gaji Pokok: '+	 ${#numbers.formatDecimal(jabatan.gaji_pokok,0,0)}"></h3>
+						<h3 th:text="'Jumlah pegawai: '+	 ${#numbers.formatDecimal(count,0,0)}"></h3>
+
+						<form action="/jabatan/ubah" method="get">
+							<input type="hidden" name="idJabatan" th:value="${jabatan.id}"/>
+							<input type="submit" value="Ubah">
+						</form>
+						
+						<form th:action="@{/jabatan/hapus}" method="POST">
+							<input type="hidden" name="idJabatan" th:value="${jabatan.id}"/>
+							<input type="submit" value="Hapus"/>
+						</form>
+						
+					</div>
+				</div>
+			</div>
+		</div>		
+	</body>
+</html>

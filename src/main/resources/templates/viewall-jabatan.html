@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<object th:include="fragments/fragment :: header" th:remove="tag"></object>
+	</head>
+	
+	<body>
+		<nav th:replace="fragments/fragment :: navbar"></nav>		
+			<table class = "table">
+				<tr>
+					<td>Nama</td>
+					<td>Deskripsi</td>					
+					<td>Gaji Pokok</td>					
+				</tr>
+
+				<tr th:each="jabatan : ${jabatanlst}">
+				
+					<td th:text="${jabatan.nama}"></td>
+					<td th:text="${jabatan.deskripsi}"></td>
+					<td th:text="${#numbers.formatDecimal(jabatan.gaji_pokok,0,0)}"></td>
+				</tr>
+
+			</table>
+	</body>
+</html>

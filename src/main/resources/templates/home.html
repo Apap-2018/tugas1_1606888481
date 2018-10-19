@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<object th:include="fragments/fragment :: header" th:remove="tag"></object>
+	</head>
+	
+	<body>
+		<nav th:replace="fragments/fragment :: navbar"></nav>
+		
+		<div class="container-fluid">
+			<h1>Sistem Informasi Kepegawaian</h1>
+			<p>Selamat Datang di Sistem Informasi Kepegawaian</p>			
+		</div>
+		<br>
+		<div class="row">
+				<div class="col-md-6">
+					<div class="card">
+						<div class="card-header">
+							Lihat Data Pegawai berdasarkan NIP
+						</div>
+						<div class="card-body">
+  							<form th:action="@{/pegawai}" method="GET">
+								<div class="card-body">
+									<label for="nip">Masukkan Nomor Induk Pegawai:</label>
+									<input type="text" name="nip" class ="form-control" />
+									<button type="submit" class="btn btn-ptimary">Cari</button>
+								</div>
+							</form>							
+						</div>
+					</div>
+				</div>
+			</div>
+		<br>
+		<div class="row">
+				<div class="col-md-6">
+					<div class="card">
+						<div class="card-header">
+							Lihat Data Detail Jabatan
+						</div>
+						<div class="card-body">
+  							<form th:action="@{/jabatan/view}" method="GET">
+								<div class="card-body">
+									<label for="id_jabatan">Pilih jabatan</label>
+										<select  class="form-control" 
+												 required="required" 
+												 name="idJabatan" >
+											<option th:each="jabatan : ${jabatanlst}" 
+													th:value="${jabatan.id}" 
+													th:text="${jabatan.nama}"
+													name = "idJabatan" ></option>
+										</select>
+									<button type="submit" class="btn btn-ptimary">Cari</button>
+								</div>
+							</form>							
+						</div>
+					</div>
+				</div>
+			</div>
+		<br>
+
+		<div class="row">
+				<div class="col-md-6">
+					<div class="card">
+						<div class="card-header">
+							Lihat Data Pegawai Tertua Dan Termuda
+						</div>
+						<div class="card-body">
+  							<form th:action="@{/pegawai/termuda-tertua}" method="GET">
+								<div class="card-body">
+									<label for="id_instansi">Pilih Instansi</label>
+										<select  class="form-control" 
+												 required="required" 
+												 name="idInstansi" >
+											<option th:each="instansi : ${instansilst}" 
+													th:value="${instansi.id}" 
+													th:text="${instansi.nama} + '-' + ${instansi.provinsi.nama}"
+													name = "idInstansi" ></option>
+										</select>
+									<button type="submit" class="btn btn-ptimary">Cari</button>
+								</div>
+							</form>							
+						</div>
+					</div>
+				</div>
+			</div>
+		
+		
+	</body>
+</html>

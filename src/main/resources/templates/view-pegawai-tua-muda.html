@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<object th:include="fragments/fragment :: header" th:remove="tag"></object>
+	</head>
+	
+	<body>
+		<nav th:replace="fragments/fragment :: navbar"></nav>
+		<div class="row">
+			<div class="col-md-6">
+				<div class="card">
+					<div class="card-header">
+						<h2 th:text="'Pegawai Termuda' "></h2>
+					</div>	
+					<div class= "card-body">
+						<p th:text="'NIP: '+${muda.nip}"></p>	
+						<p th:text="'Nama: '+${muda.nama}"></p>
+						<p th:text="'Tempat Lahir: '+${muda.tempat_lahir}"></p>
+						<p th:text="'Tanggal Lahir: '+${muda.tanggal_lahir}"></p>		
+						<p th:text="'Tahun Masuk: '+${muda.tahun_masuk}"></p>
+						<p th:text="'Nama Instansi: '+${muda.instansi.nama} + '-' +${muda.instansi.provinsi.nama}"></p>
+						<p th:text="'Jabatan: '"></p>
+						<div th:each="jabatan,iterationStatus: *{muda.jabatan}">
+							<p th:text="${jabatan.nama}"></p>
+						</div>
+						
+						<p th:text="'Gaji: ' + ${#numbers.formatDecimal(gajiMuda,0,0)}"></p>
+									
+					</div>
+					
+				</div>
+			</div>
+		</div>
+		<br>
+		<div class="row">
+			<div class="col-md-6">
+				<div class="card">
+					<div class="card-header">
+						<h2 th:text="'Pegawai Tertua'"></h2>
+					</div>	
+					<div class= "card-body">
+						<p th:text="'NIP: '+${tua.nip}"></p>	
+						<p th:text="'Nama: '+${tua.nama}"></p>
+						<p th:text="'Tempat Lahir: '+${tua.tempat_lahir}"></p>
+						<p th:text="'Tanggal Lahir: '+${tua.tanggal_lahir}"></p>		
+						<p th:text="'Tahun Masuk: '+${tua.tahun_masuk}"></p>
+						<p th:text="'Nama Instansi: '+${tua.instansi.nama} + '-' +${tua.instansi.provinsi.nama}"></p>
+						<p th:text="'Jabatan: '"></p>
+						<div th:each="jabatan,iterationStatus: *{tua.jabatan}">
+							<p th:text="${jabatan.nama}"></p>
+						</div>
+						
+						<p th:text="'Gaji: ' + ${#numbers.formatDecimal(gajiTua,0,0)}"></p>
+									
+					</div>
+					
+				</div>
+			</div>
+		</div>
+		
+	</body>
+</html>
