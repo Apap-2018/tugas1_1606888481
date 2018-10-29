@@ -111,6 +111,92 @@ public class PegawaiController {
 		 
 		return "view-pegawai-tua-muda";
 	}
+	
+		@RequestMapping(value = "/pegawai/cari", method = RequestMethod.GET)
+		public String cariPegawai (@RequestParam(value="idProvinsi", required = false) Optional<Long> idProvinsi, 
+									@RequestParam(value="idInstansi", required = false) Optional<Long> idInstansi, 
+									@RequestParam(value="idJabatan", required = false) Optional<Long> idJabatan, 
+									Model model) {
+
+			List<JabatanModel> jabatanlst = jabatanService.getJabatanList();
+			List<InstansiModel> instansilst = instansiService.getInstansiList();
+			List<ProvinsiModel> provinsilst = provinsiService.getProvinsiList();
+
+
+			List<PegawaiModel> allPegawailst = pegawaiService.getPegawaiList();
+
+			List<PegawaiModel> targetPegawailst = new ArrayList();
+
+			
+			List<PegawaiModel> pegawaiIterasiJabatan= new ArrayList();
+			List<PegawaiModel> targetIterasiInstansi = new ArrayList();
+			List<PegawaiModel> targetIterasiDaerah = new ArrayList();
+			
+			ProvinsiModel targetProv = new ProvinsiModel();
+			InstansiModel targetInstansi= new InstansiModel();
+			JabatanModel targetJabatan = new JabatanModel();
+			
+			
+			if(idProvinsi.isPresent()) {
+				targetProv = provinsiService.getProvinsiDetailById(idProvinsi.get()).get();				
+			}
+			if(idInstansi.isPresent()) {
+				targetInstansi = instansiService.getInstansiDetailById(idInstansi.get()).get();
+			}
+			if(idJabatan.isPresent()) {
+				targetJabatan = jabatanService.getJabatanDetailById(idJabatan.get()).get();							
+			}
+			
+			
+			for(PegawaiModel pegawaiTemp : allPegawailst) {
+				String daerah = pegawaiTemp.getInstansi().getProvinsi().getNama();
+				String instansi = pegawaiTemp.getInstansi().getNama();
+				boolean alreadyInlst = false;
+				ArrayList<String> jabatan = new ArrayList();
+
+				for(JabatanModel jabatanTemp : pegawaiTemp.getJabatan()) {
+					jabatan.add(jabatanTemp.getNama());
+				}
+				for(PegawaiModel pegawaicek : targetPegawailst) {
+					if(pegawaicek.getId() == pegawaiTemp.getId()) {
+						alreadyInlst = true;
+					}
+				}
+				
+				
+				if(idProvinsi.isPresent()) {
+					if(targetProv.getNama().equals(daerah) && !alreadyInlst){
+						targetPegawailst.add(pegawaiTemp);
+						alreadyInlst = true;					
+					}
+				}
+				if(idInstansi.isPresent()) {
+					if(targetInstansi.getNama().equals(instansi) && !alreadyInlst){
+						targetPegawailst.add(pegawaiTemp);
+						alreadyInlst = true;					
+					}
+				}
+				
+				if(idJabatan.isPresent()) {
+					for(String jabatanTemp : jabatan) {
+						if(jabatan.equals(targetJabatan.getNama())&& !alreadyInlst) {						
+							targetPegawailst.add(pegawaiTemp);
+							alreadyInlst = true;					
+						}
+
+					}
+				}
+				
+			}
+			
+			
+			model.addAttribute("pegawailst",targetPegawailst);
+			model.addAttribute("jabatanlst",jabatanlst);
+			model.addAttribute("instansilst",instansilst);
+			model.addAttribute("provinsilst",provinsilst);
+			model.addAttribute("title", "Home");
+			return "cari-pegawai";
+	}
 
 }
 

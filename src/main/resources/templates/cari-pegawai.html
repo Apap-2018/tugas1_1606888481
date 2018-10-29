@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<object th:include="fragments/fragment :: header" th:remove="tag"></object>
+	</head>
+	
+	<body>
+		<nav th:replace="fragments/fragment :: navbar"></nav>		
+		
+				<div class="row">
+				<div class="col-md-6">
+					<div class="card">
+						<div class="card-header">
+							Cari Pegawai
+						</div>
+						<div class="card-body">
+  							<form th:action="@{/pegawai/cari}" method="GET">
+								<div class="card-body">
+									<label for="id_provinsi">Pilih provinsi</label>
+										<select  class="form-control" 
+												 name="idProvinsi" >
+											<option th:each="provinsi : ${provinsilst}" 
+													th:value="${provinsi.id}" 
+													th:text="${provinsi.nama}"></option>
+										</select>
+
+									<label for="id_jabatan">Pilih Instansi</label>
+										<select  class="form-control" 
+												 name="idInstansi" >
+											<option th:each="instansi : ${instansilst}" 
+													th:value="${instansi.id}" 
+													th:text="${instansi.nama}"></option>
+										</select>
+
+									<label for="id_jabatan">Pilih jabatan</label>
+										<select  class="form-control" 
+												 name="idJabatan" >
+											<option th:each="jabatan : ${jabatanlst}" 
+													th:value="${jabatan.id}" 
+													th:text="${jabatan.nama}"></option>
+													
+										</select>
+									<button type="submit" class="btn btn-ptimary">Cari</button>
+								</div>
+							</form>							
+						</div>
+					</div>
+				</div>
+			</div>
+		
+		
+			<table class = "table">
+				<tr>
+					<td>NIP</td>
+					<td>Nama</td>
+					<td>Tempat Lahir</td>					
+					<td>Tanggal Lahir</td>					
+					<td>Tahun Masuk</td>					
+					<td>Nama Instansi</td>					
+					<td>Jabatan</td>					
+				</tr>
+
+				<tr th:each="pegawai : ${pegawailst}">
+				
+					<td th:text="${pegawai.nip}"></td>
+					<td th:text="${pegawai.nama}"></td>
+					<td th:text="${pegawai.tempat_lahir}"></td>
+					<td th:text="${pegawai.tanggal_lahir}"></td>
+					<td th:text="${pegawai.tahun_masuk}"></td>
+					<td th:text="${pegawai.instansi.nama}"></td>
+					<td th:each="jabatan,iterationStatus: *{pegawai.jabatan}">
+						
+						<p th:text="${jabatan.nama}"></p>
+					<td>
+				</tr>
+
+			</table>
+	</body>
+</html>
